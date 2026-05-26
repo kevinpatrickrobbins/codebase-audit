@@ -1,0 +1,10 @@
+# Do not commit audit output from /audit runs.
+**/docs/audits/
+
+# Maintainer-only tooling — not part of the skill itself.
+tools/
+.github/
+
+CHANGELOG.md
+
+node_modules/

@@ -1,0 +1,217 @@
+{
+  "_comment": "Authoritative module catalog. Source of truth for SKILL.md Step 2 table. Edit this file, then run tools/render-from-json.ps1 to regenerate the catalog block in SKILL.md between the <!-- BEGIN: modules-catalog --> markers. lint-drift Invariant 6 verifies parity.",
+  "_license": "PolyForm-Shield-1.0.0",
+  "version": "1",
+  "categories": [
+    {
+      "id": "synthesis",
+      "label": "Synthesis",
+      "modules": [
+        {
+          "num": "00.1",
+          "name": "Audit Index",
+          "output_cell": "`/docs/audits/README.md`",
+          "reference_cell": "`references/00-synthesis/audit-index.md`"
+        },
+        {
+          "num": "00.2",
+          "name": "Findings",
+          "output_cell": "`/docs/audits/findings.md`",
+          "reference_cell": "`references/00-synthesis/findings.md`"
+        },
+        {
+          "num": "00.3",
+          "name": "Remediation Plan (tickets)",
+          "output_cell": "`/docs/audits/remediation-plan.md` + filed tickets",
+          "reference_cell": "`references/00-synthesis/remediation-plan.md`"
+        },
+        {
+          "num": "00.4",
+          "name": "Compliance Readiness Mapping",
+          "output_cell": "`/docs/audits/compliance/<framework>-readiness.md` + `<framework>-controls.csv` per framework",
+          "reference_cell": "`references/00-synthesis/compliance-readiness.md` (+ `compliance-frameworks/*.md`)"
+        }
+      ]
+    },
+    {
+      "id": "foundation",
+      "label": "Foundation",
+      "modules": [
+        {
+          "num": "01",
+          "name": "System Architecture",
+          "output_cell": "`/docs/system-architecture.md`",
+          "reference_cell": "`references/01-foundation/system-architecture.md`"
+        },
+        {
+          "num": "01.5",
+          "name": "Stack-Specific Brief",
+          "output_cell": "`/docs/audits/stack-brief.md`",
+          "reference_cell": "`references/01-foundation/stack-brief.md`"
+        }
+      ]
+    },
+    {
+      "id": "compliance",
+      "label": "Compliance",
+      "modules": [
+        {
+          "num": "02",
+          "name": "Security",
+          "output_cell": "`/docs/audits/security-audit.md`",
+          "reference_cell": "`references/02-compliance/security.md`"
+        },
+        {
+          "num": "03",
+          "name": "Privacy & Data Protection",
+          "output_cell": "`/docs/audits/privacy-audit.md`",
+          "reference_cell": "`references/02-compliance/privacy.md`"
+        },
+        {
+          "num": "04",
+          "name": "Accessibility & Compliance",
+          "output_cell": "`/docs/audits/accessibility-audit.md`",
+          "reference_cell": "`references/02-compliance/accessibility.md`"
+        },
+        {
+          "num": "22",
+          "name": "Sector Compliance (conditional)",
+          "output_cell": "`/docs/audits/sector-compliance-audit.md`",
+          "reference_cell": "`references/02-compliance/sector-compliance.md`"
+        }
+      ]
+    },
+    {
+      "id": "quality",
+      "label": "Quality",
+      "modules": [
+        {
+          "num": "05",
+          "name": "Architecture Integrity",
+          "output_cell": "`/docs/audits/architecture-audit.md`",
+          "reference_cell": "`references/03-quality/architecture.md`"
+        },
+        {
+          "num": "06",
+          "name": "Testing & Quality",
+          "output_cell": "`/docs/audits/testing-audit.md`",
+          "reference_cell": "`references/03-quality/testing.md`"
+        },
+        {
+          "num": "07",
+          "name": "Documentation & Onboarding",
+          "output_cell": "`/docs/audits/documentation-audit.md`",
+          "reference_cell": "`references/03-quality/documentation.md`"
+        },
+        {
+          "num": "08",
+          "name": "Dependencies & Supply Chain",
+          "output_cell": "`/docs/audits/dependencies-audit.md`",
+          "reference_cell": "`references/03-quality/dependencies.md`"
+        }
+      ]
+    },
+    {
+      "id": "performance",
+      "label": "Performance",
+      "modules": [
+        {
+          "num": "09",
+          "name": "Performance & Scalability",
+          "output_cell": "`/docs/audits/performance-audit.md`",
+          "reference_cell": "`references/04-performance/scalability.md`"
+        },
+        {
+          "num": "10",
+          "name": "Speed (perceived)",
+          "output_cell": "`/docs/audits/speed-audit.md`",
+          "reference_cell": "`references/04-performance/speed.md`"
+        },
+        {
+          "num": "11",
+          "name": "Serverless DB & Cold-Start (conditional)",
+          "output_cell": "`/docs/audits/serverless-db-coldstart-audit.md`",
+          "reference_cell": "`references/04-performance/serverless-coldstart.md`"
+        }
+      ]
+    },
+    {
+      "id": "operations",
+      "label": "Operations",
+      "modules": [
+        {
+          "num": "12",
+          "name": "DevOps / Deployment",
+          "output_cell": "`/docs/audits/devops-audit.md`",
+          "reference_cell": "`references/05-operations/devops.md`"
+        },
+        {
+          "num": "13",
+          "name": "Cost Analysis & Right-Sizing",
+          "output_cell": "`/docs/audits/cost-audit.md`",
+          "reference_cell": "`references/05-operations/cost.md`"
+        },
+        {
+          "num": "14",
+          "name": "Engineering Practice",
+          "output_cell": "`/docs/audits/engineering-practice-audit.md`",
+          "reference_cell": "`references/05-operations/engineering-practice.md`"
+        }
+      ]
+    },
+    {
+      "id": "product",
+      "label": "Product",
+      "modules": [
+        {
+          "num": "15",
+          "name": "UX Audit",
+          "output_cell": "`/docs/audits/ux-audit.md`",
+          "reference_cell": "`references/06-product/ux.md`"
+        },
+        {
+          "num": "16",
+          "name": "Product Gap Analysis",
+          "output_cell": "`/docs/audits/product-gap-analysis.md`",
+          "reference_cell": "`references/06-product/gaps.md`"
+        },
+        {
+          "num": "17",
+          "name": "Frontend Modernization",
+          "output_cell": "`/docs/audits/frontend-modernization-audit.md`",
+          "reference_cell": "`references/06-product/frontend-modernization.md`"
+        },
+        {
+          "num": "20",
+          "name": "i18n & l10n (conditional)",
+          "output_cell": "`/docs/audits/i18n-audit.md`",
+          "reference_cell": "`references/06-product/i18n.md`"
+        },
+        {
+          "num": "21",
+          "name": "SEO & Discoverability (conditional)",
+          "output_cell": "`/docs/audits/seo-audit.md`",
+          "reference_cell": "`references/06-product/seo.md`"
+        }
+      ]
+    },
+    {
+      "id": "domain-conditional",
+      "label": "Domain-conditional",
+      "modules": [
+        {
+          "num": "18",
+          "name": "AI / ML (conditional)",
+          "output_cell": "`/docs/audits/ai-ml-audit.md`",
+          "reference_cell": "`references/07-domain-conditional/ai-ml.md`"
+        },
+        {
+          "num": "19",
+          "name": "Product-Type (conditional)",
+          "output_cell": "`/docs/audits/product-type-audit.md`",
+          "reference_cell": "`references/07-domain-conditional/product-type.md` (+ `product-types/*.md`)"
+        }
+      ]
+    }
+  ]
+}
