@@ -134,10 +134,8 @@ and parse per the tables above.
 ## Your Task
 
 Invoke the `codebase-audit` skill and follow its workflow exactly. The skill
-auto-loads from the user's installed skills directory. If it is not available
-in this session, locate `codebase-audit/SKILL.md` in your skills install
-(commonly under `~/.claude/skills/`, `~/.claude/plugins/`, or a shared-skills
-mount) and read it directly.
+auto-loads from this plugin. If it is not available in this session, read
+`${CLAUDE_PLUGIN_ROOT}/skills/codebase-audit/SKILL.md` directly.
 
 1. **Comprehension pass.** Walk the directory tree, read entry points, identify
    the stack.
@@ -148,9 +146,9 @@ mount) and read it directly.
    AI/ML, 19 — product-type) auto-skip when not applicable.
 
 3. **Run each module.** For each module, read its reference file (under
-   `references/<category>/<module>.md`) for the investigation playbook and
-   required output structure. Cite file paths and line numbers as evidence.
-   Do not speculate beyond what the code shows.
+   `${CLAUDE_PLUGIN_ROOT}/skills/codebase-audit/references/<category>/<module>.md`)
+   for the investigation playbook and required output structure. Cite file
+   paths and line numbers as evidence. Do not speculate beyond what the code shows.
 
 4. **Module 00.3 — Remediation Plan.** This module files **real tickets**, not a
    duplicate of the findings (Module 00.2). Follow the project's

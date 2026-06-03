@@ -18,30 +18,30 @@ The entry point is the `/audit` command.
 
 ## Install
 
-1. **Install the skill.** Copy or clone this repo into your AI coding
-   assistant's skills directory:
+This is a Claude Code **plugin**.
 
-   ```
-   ~/.claude/skills/codebase-audit/         (or wherever your install resolves skills)
-   ```
+**From GitHub:**
 
-   Most setups support a shared-skills mount; check your assistant's
-   configuration for the resolution path.
+```
+/plugin marketplace add kevinpatrickrobbins/codebase-audit
+/plugin install codebase-audit@codebase-audit
+```
 
-2. **Install the command.** Copy `commands/audit.md` to your commands
-   directory:
+**From a local clone:**
 
-   ```
-   cp commands/audit.md ~/.claude/commands/audit.md
-   ```
+```
+/plugin marketplace add /absolute/path/to/codebase-audit
+/plugin install codebase-audit@codebase-audit
+```
 
-3. **Verify.** In a project directory, run:
+**For local development (no install):**
 
-   ```
-   /audit
-   ```
+```
+claude --plugin-dir /absolute/path/to/codebase-audit
+```
 
-   Claude should load the skill and begin the comprehension pass.
+**Verify.** In a project directory, run `/audit` — Claude loads the skill and
+begins the comprehension pass.
 
 ---
 
@@ -57,31 +57,36 @@ The entry point is the `/audit` command.
 /audit --no-tickets             # draft remediation only, do not file tickets
 ```
 
-Full module catalog and named-mode list: see [SKILL.md](./SKILL.md) Step 2
-and Step 5, or [commands/audit.md](./commands/audit.md).
+Full module catalog and named-mode list: see
+[SKILL.md](./skills/codebase-audit/SKILL.md) Step 2 and Step 5, or
+[commands/audit.md](./commands/audit.md).
 
 ---
 
 ## Layout
 
 ```
-SKILL.md            Methodology + module catalog (read this first)
-MAINTENANCE.md      Maintainer guide (numbering policy, linter, CHANGELOG)
-CHANGELOG.md        Release history (date-based versioning)
-VERSION             Current release date
-modules.json        Authoritative module catalog (source of truth)
-commands/audit.md   The /audit slash command body
-references/         Per-module investigation playbooks (53 files, 8 categories)
-tools/              Drift linter (ps1 + mjs) + catalog renderer (ps1)
-.github/workflows/  CI: drift linter runs on every push and PR
+.claude-plugin/
+  plugin.json            Plugin manifest
+  marketplace.json       Marketplace entry (installable via /plugin marketplace add)
+commands/audit.md        The /audit slash command body (plugin entry point)
+skills/codebase-audit/
+  SKILL.md               Methodology + module catalog (read this first)
+  MAINTENANCE.md         Maintainer guide (numbering policy, linter)
+  VERSION                Current release date
+  modules.json           Authoritative module catalog (source of truth)
+  references/            Per-module investigation playbooks (8 categories)
 ```
+
+Maintainer-only tooling (`tools/`, `.github/`, `CHANGELOG.md`) is gitignored and
+lives outside the published plugin.
 
 ---
 
 ## Quality gates
 
-Every push and PR runs `tools/lint-drift.ps1` (and `tools/lint-drift.mjs`)
-in CI. The linter validates six invariants:
+The skill ships with a drift linter (maintainer-only tooling, kept outside the
+published plugin) that validates six invariants:
 
 1. Every backticked `references/...` path resolves to a real file.
 2. Each reference file's H1 module number matches the SKILL.md catalog.
@@ -96,20 +101,19 @@ in CI. The linter validates six invariants:
    markers) matches what `tools/render-from-json.ps1` would render from
    `modules.json`.
 
-Run locally:
+Run locally against the skill root:
 
 ```
-pwsh tools/lint-drift.ps1
-node tools/lint-drift.mjs
+node tools/lint-drift.mjs --skill-root skills/codebase-audit
 ```
 
 ---
 
 ## Maintenance
 
-Maintainer notes: see [MAINTENANCE.md](./MAINTENANCE.md) for the numbering
-policy, the renderer workflow, the renumbering checklist, and CHANGELOG
-conventions.
+Maintainer notes: see [MAINTENANCE.md](./skills/codebase-audit/MAINTENANCE.md)
+for the numbering policy, the renderer workflow, the renumbering checklist, and
+CHANGELOG conventions.
 
 ---
 
@@ -127,4 +131,4 @@ your own auditing product.
 For licensing exceptions, open an issue at
 <https://github.com/kevinpatrickrobbins/codebase-audit/issues>.
 
-Full text: [`LICENSE`](./LICENSE).
+Full text: [`LICENSE`](./LICENSE.md).
