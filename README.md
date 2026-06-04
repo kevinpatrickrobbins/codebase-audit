@@ -1,12 +1,13 @@
 # codebase-audit
 
-An audit playbook that examines a software codebase across 27 dimensions and
+An audit playbook that examines a software codebase across 29 dimensions and
 produces structured documentation under `docs/audits/` plus filed remediation
 tickets in the project's tracking system.
 
 Covers security, privacy, accessibility, sector compliance (HIPAA / PCI DSS /
 SOC 2 / ISO 27001 / FedRAMP / GLBA / COPPA / FERPA / EU AI Act / NIS2 / DORA /
-Quebec Law 25 / etc.), architecture, testing, dependencies, performance, speed,
+Quebec Law 25 / etc.), architecture, testing, dependencies, code reuse /
+consolidation, workaround / root-cause detection, performance, speed,
 DevOps, cost, engineering practice, UX, product gaps, frontend modernization,
 i18n, SEO, AI/ML, and product-type platform idioms (iOS / Android / RN / Expo /
 Flutter / Electron / browser-extension / PWA / SaaS multi-tenant / marketplace /
@@ -48,12 +49,13 @@ begins the comprehension pass.
 ## Usage
 
 ```
-/audit                          # full suite (27 modules, conditional ones auto-skip)
+/audit                          # full suite (29 modules, conditional ones auto-skip)
 /audit ship                     # pre-deploy readiness verdict
 /audit security                 # security posture review
 /audit security privacy a11y    # specific modules
 /audit launch-compliance        # pre-launch regulatory readiness
 /audit takeover                 # new-maintainer / legacy walkthrough
+/audit hygiene                  # duplication + workaround scan, folded into findings, no tickets
 /audit --no-tickets             # draft remediation only, do not file tickets
 ```
 

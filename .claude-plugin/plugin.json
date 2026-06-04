@@ -1,7 +1,7 @@
 {
   "name": "codebase-audit",
-  "version": "2026.5.26",
-  "description": "Audits a software codebase across 27 dimensions — security, privacy, accessibility, sector compliance (HIPAA/PCI/SOC 2/ISO 27001/FedRAMP/COPPA/FERPA/GLBA/EU AI Act/NIS2/DORA/Quebec Law 25), architecture, testing, dependencies, performance, speed, DevOps, cost, engineering practice, UX, product gaps, frontend modernization, i18n, SEO, AI/ML, and product-type idioms. Produces structured docs under /docs/audits/ and files remediation tickets. Entry point: /audit.",
+  "version": "2026.6.4",
+  "description": "Audits a software codebase across 29 dimensions — security, privacy, accessibility, sector compliance (HIPAA/PCI/SOC 2/ISO 27001/FedRAMP/COPPA/FERPA/GLBA/EU AI Act/NIS2/DORA/Quebec Law 25), architecture, testing, dependencies, code reuse / consolidation, workaround / root-cause detection, performance, speed, DevOps, cost, engineering practice, UX, product gaps, frontend modernization, i18n, SEO, AI/ML, and product-type idioms. Produces structured docs under /docs/audits/ and files remediation tickets. Entry point: /audit.",
   "author": {
     "name": "Kevin Robbins",
     "email": "kevinpatrickrobbins@gmail.com"

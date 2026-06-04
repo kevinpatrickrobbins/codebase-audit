@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "codebase-audit",
-  "description": "A 27-dimension codebase audit playbook for Claude Code.",
+  "description": "A 29-dimension codebase audit playbook for Claude Code.",
   "owner": {
     "name": "Kevin Robbins",
     "email": "kevinpatrickrobbins@gmail.com"
@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "codebase-audit",
-      "description": "Audits a codebase across 27 dimensions (security, privacy, accessibility, sector compliance, architecture, testing, performance, DevOps, cost, UX, SEO, AI/ML, and more); produces /docs/audits/ reports and files remediation tickets. Entry point: /audit.",
+      "description": "Audits a codebase across 29 dimensions (security, privacy, accessibility, sector compliance, architecture, testing, performance, DevOps, cost, UX, SEO, AI/ML, and more); produces /docs/audits/ reports and files remediation tickets. Entry point: /audit.",
       "category": "development",
       "source": "."
     }
