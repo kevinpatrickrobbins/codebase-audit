@@ -101,6 +101,10 @@ How to find them:
 Use tooling thinking: an LSP "find references" on common names (`Button`,
 `format`, `validate`) gives a quick duplication scan.
 
+This is a fast, name-keyed scan. For the deep pass — functions that do the same
+job under *different* names (which a name-keyed scan misses) — see Module 23
+(Reuse & Consolidation), `references/03-quality/reuse-consolidation.md`.
+
 ### Step 7: Error handling discipline
 
 Beyond "is there try/catch?":
@@ -323,6 +327,10 @@ Search for:
 - "Temporary" workarounds with no removal date.
 
 Count them, group them, and call out the worst clusters.
+
+This counts and clusters the markers. For the deeper pass — what each workaround
+is *avoiding*, whether a real fix exists, and what it is — see Module 24
+(Workarounds & Root-Cause Gaps), `references/03-quality/workarounds.md`.
 
 ---
 

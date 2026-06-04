@@ -1,10 +1,11 @@
 ---
 name: codebase-audit
 description: >
-  Audits a software codebase across 27 dimensions — security, privacy,
+  Audits a software codebase across 29 dimensions — security, privacy,
   accessibility, sector compliance (HIPAA/PCI/SOC 2/ISO 27001/FedRAMP/COPPA/
   FERPA/GLBA/EU AI Act/NIS2/DORA/Quebec Law 25/etc.), architecture, testing,
-  dependencies, performance, speed, DevOps, cost, engineering practice, UX,
+  dependencies, code reuse / consolidation, workaround / root-cause detection,
+  performance, speed, DevOps, cost, engineering practice, UX,
   product gaps, frontend modernization, i18n, SEO, AI/ML, and product-type
   platform idioms. Produces structured docs under `/docs/audits/` and files
   real remediation tickets. Use for any audit / review / analysis request,
@@ -271,6 +272,8 @@ for the next maintenance pass.
 | 06 | Testing & Quality | `/docs/audits/testing-audit.md` | `references/03-quality/testing.md` |
 | 07 | Documentation & Onboarding | `/docs/audits/documentation-audit.md` | `references/03-quality/documentation.md` |
 | 08 | Dependencies & Supply Chain | `/docs/audits/dependencies-audit.md` | `references/03-quality/dependencies.md` |
+| 23 | Reuse & Consolidation | `/docs/audits/reuse-consolidation-audit.md` | `references/03-quality/reuse-consolidation.md` |
+| 24 | Workarounds & Root-Cause Gaps | `/docs/audits/workarounds-audit.md` | `references/03-quality/workarounds.md` |
 | **Performance** | | | |
 | 09 | Performance & Scalability | `/docs/audits/performance-audit.md` | `references/04-performance/scalability.md` |
 | 10 | Speed (perceived) | `/docs/audits/speed-audit.md` | `references/04-performance/speed.md` |
@@ -318,7 +321,7 @@ Modules feed each other; some are conditional. Run in this order:
 Foundation:        01 → 01.5 (stack brief — input to downstream)
 Detection:         19 (product-type detection)
 Compliance:        02 → 03 → 04 → 22 (sector — conditional)
-Quality:           08 → 05 → 06 → 07
+Quality:           08 → 05 → 23 → 24 → 06 → 07
 Performance:       09 → 10 → 11 (conditional)
 Operations:        12 → 13 → 14
 Product:           15 → 16 → 17 → 20 (conditional) → 21 (conditional)
@@ -351,6 +354,10 @@ Dependency rationale:
   (e.g., accessibility audit knows the platform; cost audit knows native vs web).
 - **Module 08** (Dependencies) runs before quality modules because EOL runtime
   findings cascade into other quality concerns.
+- **Modules 23 + 24** (Reuse & Consolidation, Workarounds & Root-Cause Gaps)
+  run right after **Module 05** (Architecture Integrity): both deepen analysis
+  that Module 05 only scans at the surface (Step 6 duplication → 23; Step 10
+  tech-debt markers → 24), so they reuse its component map and findings.
 - **Module 11** (Serverless cold-start) is conditional — only when stack is
   serverless/edge with a connection-limited DB.
 - **Module 18** (AI/ML) is conditional — only when LLM SDKs are present.
@@ -436,6 +443,7 @@ point of ship mode is keeping the answer fast and focused.
 | `/audit launch-compliance` | 02, 03, 04, 22 | Pre-launch regulatory readiness |
 | `/audit takeover` | 01, 05, 07, 08, 14 | New maintainer / legacy walkthrough |
 | `/audit ai` | 18 (+ 02, 03 as cross-refs) | LLM-feature deep dive |
+| `/audit hygiene` | 23, 24 → 00.2 (findings); 00.3 draft | Code-hygiene pass — duplication + workarounds folded into the findings catalog, **not** auto-filed (≡ `reuse workarounds risk --no-tickets`). |
 
 These are conventions only — the user types the invocation, the skill
 runs the listed modules. Don't invent new named modes ad hoc; if a new

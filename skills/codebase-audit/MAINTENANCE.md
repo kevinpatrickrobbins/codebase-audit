@@ -3,7 +3,7 @@
 This file is for **skill maintainers** — people editing the audit playbook
 itself, not people running audits with it.
 
-The skill is large (27 modules, ~50 reference files, 14 compliance-framework
+The skill is large (29 modules, ~52 reference files, 14 compliance-framework
 sub-references, 12 product-type sub-references). It is also exposed via the
 `/audit` slash command, which means changes here are surfaced to every user
 of the command. Treat edits with the same discipline you would treat a CLI

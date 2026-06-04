@@ -108,6 +108,18 @@
           "name": "Dependencies & Supply Chain",
           "output_cell": "`/docs/audits/dependencies-audit.md`",
           "reference_cell": "`references/03-quality/dependencies.md`"
+        },
+        {
+          "num": "23",
+          "name": "Reuse & Consolidation",
+          "output_cell": "`/docs/audits/reuse-consolidation-audit.md`",
+          "reference_cell": "`references/03-quality/reuse-consolidation.md`"
+        },
+        {
+          "num": "24",
+          "name": "Workarounds & Root-Cause Gaps",
+          "output_cell": "`/docs/audits/workarounds-audit.md`",
+          "reference_cell": "`references/03-quality/workarounds.md`"
         }
       ]
     },
