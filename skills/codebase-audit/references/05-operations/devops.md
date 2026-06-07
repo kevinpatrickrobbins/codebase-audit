@@ -89,6 +89,62 @@ Critical and often badly handled.
   staging copy of prod? Some migrations are inherently irreversible (data
   loss); document those.
 
+#### Schema drift: does the recorded migration state match the live database?
+
+A migration ledger that *says* everything is applied is not evidence that it
+**was**. The dangerous, near-invisible failure is divergence between three
+sources of truth:
+
+1. **Intended schema** — the source-of-truth definition: ORM models / a schema
+   DSL, or the cumulative effect of the migration files.
+2. **Applied ledger** — wherever the tool records which migrations ran: a
+   tracking table (`schema_migrations`, `__drizzle_migrations`,
+   `flyway_schema_history`, `alembic_version`, `DATABASECHANGELOG`, …) and/or a
+   journal file. This is a *claim*, not proof.
+3. **Actual physical schema** — the tables, columns, constraints, and indexes
+   that really exist, read from the database catalog (`information_schema` /
+   `pg_catalog`, `SHOW`, or driver introspection).
+
+The ledger can claim a migration is applied while the physical schema lacks its
+changes — a hand-edited/repaired journal, a tracking table written out of band,
+or a deploy that shipped code without running the migration step. The tool then
+**skips** that migration forever, so the drift is sticky and the running app
+issues queries against columns/tables that don't exist.
+
+**This is the one migration hazard static file analysis structurally cannot
+detect** — it requires looking at the live database. A purely static read sees a
+tidy, sequential ledger and reports "healthy" while production is missing half
+of it. Perform this check live (engine- and framework-agnostic — adapt to the
+repo, assume no specific database or tool):
+
+1. **Detect the toolchain.** Identify the migration tool, where it records
+   applied state (tracking table and/or journal), the intended-schema source
+   (models / DSL / migration set), and the env var holding the DB connection.
+2. **Prefer the project's own drift/diff command** — the deterministic,
+   authoritative answer. Illustrative, not exhaustive: `prisma migrate status` /
+   `prisma migrate diff`, `drizzle-kit push`/`check`, Rails `db:migrate:status`,
+   Django `migrate --plan` + `makemigrations --check --dry-run`, Flyway
+   `info`/`validate`, Liquibase `status`/`validate`, sqitch `status`, EF Core
+   `dotnet ef migrations list`. A project-provided verify script (e.g. a
+   `db:verify`-style command) is the strongest signal — run it, report its result.
+3. **Otherwise introspect read-only and compare** the live catalog against the
+   intended schema (do all expected tables/columns/constraints exist?) and the
+   tracking table's applied set against the migration set on disk.
+4. **Read-only, always.** Connect read-only, use a read replica, or best —
+   run against a **disposable branch/clone** of production (DB branching, a
+   restored snapshot) so real data shape is exercised at zero risk. **Never**
+   run a reconciling `push`/`apply` against production to "find out."
+5. **If you cannot reach a live database** (no credentials/network, restricted
+   run), do not fake it: record under *Out of Scope / Inconclusive* that prod
+   drift is unverified, and recommend wiring an automated drift check.
+
+Report the specific missing / extra / mismatched objects, which of the three
+sources disagree, and a severity (a column the app reads that is absent in prod
+is Critical). **Also assess whether drift is checked automatically** — a
+post-migrate / post-deploy or scheduled verification gate. Its *absence* is
+itself a finding: without it, drift surfaces only when someone happens to run
+this audit, by which point it may have been live for weeks.
+
 #### Schema-change mechanics
 
 The category of bugs that crash production at deploy time:
@@ -221,6 +277,10 @@ The category most teams say is fine but never test.
 - Secrets committed in plaintext (`.env` checked in, secrets in YAML).
 - No rollback plan documented and platform is not Vercel/Netlify/etc.
 - Migrations applied via `prisma db push` in production (drift, no history).
+- Migration ledger (tracking table / journal) claims an applied state the live
+  database doesn't reflect — verified against the DB, not just the files.
+- No automated drift check comparing intended schema, applied ledger, and the
+  live database (drift surfaces only when someone runs an audit).
 - Health endpoint returns 200 unconditionally without checking dependencies.
 - `npm install` (not `npm ci`) in CI — non-reproducible builds.
 - Build uses `node:latest` or unpinned base image.
