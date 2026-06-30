@@ -1,18 +1,20 @@
 ---
 name: codebase-audit
 description: >
-  Audits a software codebase across 29 dimensions — security, privacy,
+  Audits a software codebase across 30 dimensions — security, privacy,
   accessibility, sector compliance (HIPAA/PCI/SOC 2/ISO 27001/FedRAMP/COPPA/
   FERPA/GLBA/EU AI Act/NIS2/DORA/Quebec Law 25/etc.), architecture, testing,
   dependencies, code reuse / consolidation, workaround / root-cause detection,
-  performance, speed, DevOps, cost, engineering practice, UX,
-  product gaps, frontend modernization, i18n, SEO, AI/ML, and product-type
-  platform idioms. Produces structured docs under `/docs/audits/` and files
-  real remediation tickets. Use for any audit / review / analysis request,
-  including narrow asks like "security review", "is this accessible", "are we
-  GDPR/HIPAA/PCI/SOC 2 compliant", "is the app slow", "is this ready to ship",
-  "audit our deployment", "find product gaps", "is our SEO any good", "are
-  our deps current", "are we overpaying for infra", "can a new dev onboard".
+  dead code / unused-surface detection, performance, speed, DevOps, cost,
+  engineering practice, UX, product gaps, frontend modernization, i18n, SEO,
+  AI/ML, and product-type platform idioms. Produces structured docs under
+  `/docs/audits/` and files real remediation tickets. Use for any audit /
+  review / analysis request, including narrow asks like "security review",
+  "is this accessible", "are we GDPR/HIPAA/PCI/SOC 2 compliant", "is the app
+  slow", "is this ready to ship", "audit our deployment", "find product
+  gaps", "is our SEO any good", "are our deps current", "are we overpaying
+  for infra", "can a new dev onboard", "find dead code", "what can we
+  delete", "is there bloat in this codebase".
   The `/audit` command is the user-facing entry point.
 ---
 
@@ -225,6 +227,7 @@ Then:
 - **19 — Product-Type sub-references** — platform policy currency (App Store, Play Console, etc.)
 - **20 — i18n & l10n** — current CLDR / Intl API / ICU MessageFormat state, framework i18n library versions
 - **21 — SEO & Discoverability** — current Schema.org vocabulary, Google Search guidance, AI search citation practice
+- **25 — Dead Code & Unused Surface** — current best-in-class unused-code tooling per ecosystem (e.g. knip vs. ts-prune, vulture vs. deadcode)
 
 Other modules can adopt the pattern as their content rots; flag candidates
 for the next maintenance pass.
@@ -274,6 +277,7 @@ for the next maintenance pass.
 | 08 | Dependencies & Supply Chain | `/docs/audits/dependencies-audit.md` | `references/03-quality/dependencies.md` |
 | 23 | Reuse & Consolidation | `/docs/audits/reuse-consolidation-audit.md` | `references/03-quality/reuse-consolidation.md` |
 | 24 | Workarounds & Root-Cause Gaps | `/docs/audits/workarounds-audit.md` | `references/03-quality/workarounds.md` |
+| 25 | Dead Code & Unused Surface | `/docs/audits/dead-code-audit.md` | `references/03-quality/dead-code.md` |
 | **Performance** | | | |
 | 09 | Performance & Scalability | `/docs/audits/performance-audit.md` | `references/04-performance/scalability.md` |
 | 10 | Speed (perceived) | `/docs/audits/speed-audit.md` | `references/04-performance/speed.md` |
@@ -321,7 +325,7 @@ Modules feed each other; some are conditional. Run in this order:
 Foundation:        01 → 01.5 (stack brief — input to downstream)
 Detection:         19 (product-type detection)
 Compliance:        02 → 03 → 04 → 22 (sector — conditional)
-Quality:           08 → 05 → 23 → 24 → 06 → 07
+Quality:           08 → 05 → 23 → 24 → 25 → 06 → 07
 Performance:       09 → 10 → 11 (conditional)
 Operations:        12 → 13 → 14
 Product:           15 → 16 → 17 → 20 (conditional) → 21 (conditional)
@@ -358,6 +362,13 @@ Dependency rationale:
   run right after **Module 05** (Architecture Integrity): both deepen analysis
   that Module 05 only scans at the surface (Step 6 duplication → 23; Step 10
   tech-debt markers → 24), so they reuse its component map and findings.
+- **Module 25** (Dead Code & Unused Surface) runs right after **Modules 23 +
+  24**: it deepens the same Module 05 surface scan (Step 6 duplication, Step
+  10 "legacy"/"v2" directories) from a different angle — confirming whether
+  flagged code is actually unreferenced, rather than merely duplicated (23)
+  or band-aided (24). Running last in the trio lets it benefit from 23/24
+  having already established the component map and the canonical
+  implementations, so it isn't re-deriving that context.
 - **Module 11** (Serverless cold-start) is conditional — only when stack is
   serverless/edge with a connection-limited DB.
 - **Module 18** (AI/ML) is conditional — only when LLM SDKs are present.
@@ -443,7 +454,7 @@ point of ship mode is keeping the answer fast and focused.
 | `/audit launch-compliance` | 02, 03, 04, 22 | Pre-launch regulatory readiness |
 | `/audit takeover` | 01, 05, 07, 08, 14 | New maintainer / legacy walkthrough |
 | `/audit ai` | 18 (+ 02, 03 as cross-refs) | LLM-feature deep dive |
-| `/audit hygiene` | 23, 24 → 00.2 (findings); 00.3 draft | Code-hygiene pass — duplication + workarounds folded into the findings catalog, **not** auto-filed (≡ `reuse workarounds risk --no-tickets`). |
+| `/audit hygiene` | 23, 24, 25 → 00.2 (findings); 00.3 draft | Code-hygiene pass — duplication + workarounds + dead code folded into the findings catalog, **not** auto-filed (≡ `reuse workarounds dead-code risk --no-tickets`). |
 
 These are conventions only — the user types the invocation, the skill
 runs the listed modules. Don't invent new named modes ad hoc; if a new

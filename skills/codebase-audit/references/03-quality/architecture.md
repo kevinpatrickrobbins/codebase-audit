@@ -103,7 +103,9 @@ Use tooling thinking: an LSP "find references" on common names (`Button`,
 
 This is a fast, name-keyed scan. For the deep pass — functions that do the same
 job under *different* names (which a name-keyed scan misses) — see Module 23
-(Reuse & Consolidation), `references/03-quality/reuse-consolidation.md`.
+(Reuse & Consolidation), `references/03-quality/reuse-consolidation.md`. For
+whether a flagged candidate is referenced *at all* — see Module 25 (Dead Code
+& Unused Surface), `references/03-quality/dead-code.md`.
 
 ### Step 7: Error handling discipline
 
@@ -330,7 +332,9 @@ Count them, group them, and call out the worst clusters.
 
 This counts and clusters the markers. For the deeper pass — what each workaround
 is *avoiding*, whether a real fix exists, and what it is — see Module 24
-(Workarounds & Root-Cause Gaps), `references/03-quality/workarounds.md`.
+(Workarounds & Root-Cause Gaps), `references/03-quality/workarounds.md`. For
+whether commented-out code or a "legacy"/"v2" directory is actually dead —
+see Module 25 (Dead Code & Unused Surface), `references/03-quality/dead-code.md`.
 
 ---
 

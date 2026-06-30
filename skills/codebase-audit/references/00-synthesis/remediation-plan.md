@@ -109,7 +109,7 @@ draft markdown file regardless of what tracking system exists.
 Walk every finding from every finding-producing module that ran this audit:
 
 - **Compliance:** 02 (security), 03 (privacy), 04 (accessibility), 22 (sector — if applicable)
-- **Quality:** 05 (architecture integrity), 06 (testing), 07 (documentation), 08 (dependencies), 23 (reuse & consolidation), 24 (workarounds & root-cause gaps)
+- **Quality:** 05 (architecture integrity), 06 (testing), 07 (documentation), 08 (dependencies), 23 (reuse & consolidation), 24 (workarounds & root-cause gaps), 25 (dead code & unused surface)
 - **Performance:** 09 (scalability), 10 (speed), 11 (serverless cold-start — if applicable)
 - **Operations:** 12 (devops), 13 (cost), 14 (engineering practice)
 - **Product:** 15 (UX), 16 (product gaps), 17 (frontend modernization), 20 (i18n — if applicable), 21 (SEO — if applicable)
@@ -206,6 +206,7 @@ Use the `tickets-and-logbook` two-label scheme: **one thematic + one status**.
 | 22 — Sector Compliance | `quality` (and the framework label if it exists — `hipaa`, `pci`, etc.) |
 | 23 — Reuse & Consolidation | `quality` |
 | 24 — Workarounds & Root-Cause Gaps | `quality` |
+| 25 — Dead Code & Unused Surface | `quality` |
 
 If the project has audit-specific labels (e.g., `security`, `accessibility`,
 `a11y`), prefer those. Otherwise fall back to the standard set: `feature`,
@@ -321,6 +322,9 @@ Audit run commit: <git rev-parse HEAD>
 - ...
 
 ### Workarounds & Root-Cause Gaps (Module 24)
+- ...
+
+### Dead Code & Unused Surface (Module 25)
 - ...
 
 ### Performance & Scalability (Module 09)

@@ -10,7 +10,7 @@ system.
 $ARGUMENTS
 
 Parse as zero or more module names (comma- or space-separated), plus optional
-flags. Module names map to the 29-module catalog in the skill:
+flags. Module names map to the 30-module catalog in the skill:
 
 ### Synthesis (run last; aggregates everything)
 
@@ -61,6 +61,7 @@ flags. Module names map to the 29-module catalog in the skill:
 | `deps` / `dependencies` | 08 — Dependencies & Supply Chain |
 | `reuse` / `consolidation` / `dedupe` | 23 — Reuse & Consolidation |
 | `workarounds` / `root-cause` / `band-aids` | 24 — Workarounds & Root-Cause Gaps |
+| `dead-code` / `deadcode` / `unused` | 25 — Dead Code & Unused Surface |
 
 ### Performance
 
@@ -109,7 +110,7 @@ question yields the same answer shape every time.
 | `launch-compliance` | 02, 03, 04, 22 | Pre-launch regulatory readiness |
 | `takeover` | 01, 05, 07, 08, 14 | New maintainer / legacy walkthrough |
 | `ai` | 18 (+ 02, 03 as cross-refs) | LLM-feature deep dive |
-| `hygiene` | 23, 24, 00.2 (findings); 00.3 draft only | Code-hygiene pass — duplication + workarounds added to the findings catalog without filing tickets (≡ `reuse workarounds risk --no-tickets`) |
+| `hygiene` | 23, 24, 25, 00.2 (findings); 00.3 draft only | Code-hygiene pass — duplication + workarounds + dead code added to the findings catalog without filing tickets (≡ `reuse workarounds dead-code risk --no-tickets`) |
 
 If the user types a name not in this table, treat it as a module-name list
 and parse per the tables above.
@@ -127,7 +128,8 @@ and parse per the tables above.
 - `/audit ship` → pre-deploy ship-readiness verdict with the ship-set modules
 - `/audit security privacy accessibility` → all three compliance audits
 - `/audit deps testing docs` → quality-focused pass
-- `/audit hygiene` → duplication + workaround scan, folded into the findings catalog (no tickets filed)
+- `/audit hygiene` → duplication + workaround + dead-code scan, folded into the findings catalog (no tickets filed)
+- `/audit dead-code` → unused exports/files/dependencies + unreachable code only
 - `/audit cost speed` → infra and perf-focused pass
 - `/audit launch-compliance` → pre-launch regulatory readiness
 - `/audit takeover` → new-maintainer walkthrough

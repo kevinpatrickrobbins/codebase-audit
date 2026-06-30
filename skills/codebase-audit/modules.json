@@ -120,6 +120,12 @@
           "name": "Workarounds & Root-Cause Gaps",
           "output_cell": "`/docs/audits/workarounds-audit.md`",
           "reference_cell": "`references/03-quality/workarounds.md`"
+        },
+        {
+          "num": "25",
+          "name": "Dead Code & Unused Surface",
+          "output_cell": "`/docs/audits/dead-code-audit.md`",
+          "reference_cell": "`references/03-quality/dead-code.md`"
         }
       ]
     },
